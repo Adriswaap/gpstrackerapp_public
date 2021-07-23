@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GpsTrackerApp</string>
+    <string name="tempAdres">naam naam \nadres 11 \n2222AB Staddorp</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
