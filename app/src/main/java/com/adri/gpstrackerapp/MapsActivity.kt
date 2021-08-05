@@ -1,5 +1,6 @@
 package com.adri.gpstrackerapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -43,15 +44,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         println(Constants.LOCATION_LIST.size)
-        for(location in Constants.LOCATION_LIST){
-            locPos = LatLng(location.latitude, location.longitude)
-            println("Latitude = " + location.latitude + " Longtitude = " + location.longitude)
-            mMap.addMarker(MarkerOptions().
+        if(Constants.MANY_BOOL){
+            for(location in Constants.LOCATION_LIST){
+                locPos = LatLng(location.latitude, location.longitude)
+                println("Latitude = " + location.latitude + " Longtitude = " + location.longitude)
+                mMap.addMarker(MarkerOptions().
                 position(LatLng(location.latitude, location.longitude)).
                 title("Latitude = " + location.latitude + " Longtitude = " + location.longitude))
 
+            }
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locPos,15f))
+        }else{
+            var incoming : Intent = intent
+            var lat : Double = incoming.extras?.getDouble("LATITUDE")!!
+            var lon : Double = incoming.extras?.getDouble("LONGTITUDE")!!
+            locPos = LatLng(lat,lon)
+            mMap.addMarker(MarkerOptions().position(locPos).title("One click locationPin"))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locPos, 15f))
         }
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locPos,15f))
+
 
         mMap.setOnMarkerClickListener{
             if(it.tag == null)

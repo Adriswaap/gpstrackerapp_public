@@ -112,6 +112,15 @@ class MainActivity : AppCompatActivity() {
 
         showMapBtn.setOnClickListener {
             val mapsIntent = Intent(this, MapsActivity::class.java)
+            Constants.MANY_BOOL = true
+            startActivity(mapsIntent)
+        }
+
+        dropPinBtn.setOnClickListener{
+            val mapsIntent = Intent(this, MapsActivity::class.java)
+            Constants.MANY_BOOL = false
+            mapsIntent.putExtra("LATITUDE", currentLocation.latitude)
+            mapsIntent.putExtra("LONGTITUDE", currentLocation.longitude)
             startActivity(mapsIntent)
         }
 
